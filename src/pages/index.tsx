@@ -1,16 +1,17 @@
 import Head from "next/head"
 import { Cormorant_Garamond, DM_Sans } from "next/font/google"
+import { PackageDescriptionSection } from "@/sections/PackageDescriptionSection"
 
 export const cormorant = Cormorant_Garamond({
     subsets: ["latin"],
-    weight: ["300"],
+    weight: ["300", "400", "500", "600", "700"],
     variable: "--font-cormorant",
     display: "swap",
 })
 
 export const dmSans = DM_Sans({
     subsets: ["latin"],
-    weight: ["500"],
+    weight: ["300", "400", "500", "600", "700"],
     variable: "--font-dm-sans",
     display: "swap",
 })
@@ -33,10 +34,10 @@ export default function Home() {
             <div className={`${dmSans.variable} ${cormorant.variable}`}>
                 <div
                     style={{
-                        fontFamily: "var(--font-cormorant)",
+                        fontFamily: "var(--font-dm-sans)",
                     }}
                 >
-                    01
+                    <PackageDescriptionSection />
                 </div>
             </div>
         </>
