@@ -1,6 +1,7 @@
 import Head from "next/head"
 import { Cormorant_Garamond, DM_Sans } from "next/font/google"
 import { PackageDescriptionSection } from "@/sections/PackageDescriptionSection"
+import { ContactSection } from "@/sections/ContactSection"
 
 export const cormorant = Cormorant_Garamond({
     subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function Home() {
                     }}
                 >
                     <PackageDescriptionSection />
+                    <ContactSection />
                 </div>
             </div>
         </>
