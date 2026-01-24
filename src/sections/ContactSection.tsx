@@ -3,63 +3,84 @@ import {
     faArrowRight,
     faCheckCircle,
     faExclamationCircle,
+    faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react"
 
 type InputState = {
+    fieldName: string
     value: string
     error: string | undefined
     disabled: boolean
 }
-const defaultInputState: InputState = {
-    value: "",
-    error: undefined,
-    disabled: false,
+const getDefaultInputState = (fieldName: string) => {
+    return {
+        fieldName,
+        value: "",
+        error: undefined,
+        disabled: false,
+    } as InputState
 }
 
+const defaultSubmissionError =
+    "Something went wrong. Try again later or contact us for assistance."
 export function ContactSection() {
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const [didSendMessage, setDidSendMessage] = useState(false)
-    const [name, setName] = useState({ ...defaultInputState })
-    const [email, setEmail] = useState({ ...defaultInputState })
-    const [phone, setPhone] = useState({ ...defaultInputState })
-    const [message, setMessage] = useState({ ...defaultInputState })
+    const [name, setName] = useState(getDefaultInputState("Name"))
+    const [email, setEmail] = useState(getDefaultInputState("Email"))
+    const [phone, setPhone] = useState(getDefaultInputState("Phone"))
+    const [message, setMessage] = useState(getDefaultInputState("Message"))
+    const [submissionError, setSubmissionError] = useState("")
     const handleInputChange = useCallback(
         (setter: Dispatch<SetStateAction<InputState>>) => (t: string) => {
             setter((v) => ({ ...v, value: t, error: undefined }))
         },
         []
     )
-    const handleFormSubmit = useCallback(() => {
+    const handleFormSubmit = useCallback(async () => {
+        setIsSubmitting(true)
         let hasError = false
-        if (!name.value) {
-            setName((v) => ({ ...v, error: "Name is a required field" }))
-            hasError = true
-        } else {
-            // ... other validation checks
+        const states = [
+            [name, setName],
+            [email, setEmail],
+            [phone, setPhone],
+            [message, setMessage],
+        ] as const
+        for (const [val, setVal] of states) {
+            if (val.error) {
+                hasError = true
+            }
+            if (!val.value) {
+                setVal((v) => ({ ...v, error: `${val.fieldName} is required` }))
+                hasError = true
+            }
+            // ...other validation checks
         }
-        if (!email.value) {
-            setEmail((v) => ({ ...v, error: "Email is a required field" }))
-            hasError = true
-        } else {
-            // ... other validation checks
+        if (hasError) {
+            setIsSubmitting(false)
+            return
         }
-        if (!phone.value) {
-            setPhone((v) => ({
-                ...v,
-                error: "Phone number is a required field",
-            }))
-            hasError = true
-        } else {
-            // ... other validation checks
+        try {
+            const res = await fetch("/api/submitForm", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(
+                    states.reduce((acc, [val]) => {
+                        acc[val.fieldName.toLowerCase()] = val.value
+                        return acc
+                    }, {} as Record<string, string>)
+                ),
+            })
+            if (!res.ok) throw new Error()
+        } catch {
+            setSubmissionError(defaultSubmissionError)
+            setIsSubmitting(false)
+            return
         }
-        if (!message.value) {
-            setMessage((v) => ({ ...v, error: "Message is a required field" }))
-            hasError = true
-        } else {
-            // ... other validation checks
-        }
-        if (hasError) return
         for (const setter of [setName, setEmail, setPhone, setMessage]) {
             setter((v) => ({ ...v, disabled: true }))
         }
@@ -160,7 +181,7 @@ export function ContactSection() {
                         error={name.error}
                         label="Name"
                         placeholder="Your name"
-                        disabled={name.disabled}
+                        disabled={name.disabled || isSubmitting}
                     />
                     <Input
                         value={email.value}
@@ -168,7 +189,7 @@ export function ContactSection() {
                         error={email.error}
                         label="Email"
                         placeholder="you@example.com"
-                        disabled={email.disabled}
+                        disabled={email.disabled || isSubmitting}
                     />
                 </div>
                 <div
@@ -182,7 +203,7 @@ export function ContactSection() {
                         error={phone.error}
                         label="Phone"
                         placeholder="(555) 123-4567"
-                        disabled={phone.disabled}
+                        disabled={phone.disabled || isSubmitting}
                     />
                 </div>
                 <div
@@ -197,7 +218,7 @@ export function ContactSection() {
                         label="Message"
                         placeholder="Tell us about your vehicle and what services you're interested in..."
                         isMultiline
-                        disabled={message.disabled}
+                        disabled={message.disabled || isSubmitting}
                     />
                 </div>
                 {didSendMessage && (
@@ -230,11 +251,38 @@ export function ContactSection() {
                         </div>
                     </div>
                 )}
+                {submissionError && (
+                    <div
+                        style={{
+                            border: "1px solid var(--color-brand-red)",
+                            backgroundColor: "var(--color-darker-brand-red)",
+                            display: "flex",
+                            gap: "12px",
+                            paddingInline: "12px",
+                            paddingBlock: "20px",
+                            borderRadius: "8px",
+                        }}
+                    >
+                        <FontAwesomeIcon
+                            icon={faXmarkCircle}
+                            style={{
+                                color: "var(--color-brand-red)",
+                            }}
+                        />
+                        <div
+                            style={{
+                                color: "var(--color-brand-white)",
+                            }}
+                        >
+                            {submissionError}
+                        </div>
+                    </div>
+                )}
                 <Button
                     text="SEND MESSAGE"
                     rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
                     onClick={handleFormSubmit}
-                    disabled={didSendMessage}
+                    disabled={didSendMessage || isSubmitting}
                 />
             </div>
             <div
