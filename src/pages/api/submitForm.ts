@@ -9,7 +9,6 @@ export default async function handler(
         return res.status(405).json({ error: "Method not allowed" })
     }
     const { name, email, phone, message } = req.body
-    console.log(JSON.stringify(req.body, null, 2))
     if (!name || !email || !phone || !message) {
         return res.status(400).json({ error: "Invalid body" })
     }

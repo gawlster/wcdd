@@ -10,7 +10,8 @@ export default async function handler(
     try {
         const submissions = await prisma?.formSubmission.findMany()
         return res.status(200).json({ submissions })
-    } catch {
+    } catch (e) {
+        console.log(e)
         return res.status(500).json({ error: "Failed to get form submissions" })
     }
 }

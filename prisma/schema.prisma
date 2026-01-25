@@ -11,9 +11,11 @@ datasource db {
 }
 
 model FormSubmission {
-    id      Int    @id @default(autoincrement())
-    name    String
-    email   String
-    phone   String
-    message String
+    id           Int      @id @default(autoincrement())
+    createdAt    DateTime @default(now())
+    hasResponded Boolean  @default(false)
+    name         String
+    email        String
+    phone        String
+    message      String
 }
