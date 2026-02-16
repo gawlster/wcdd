@@ -1,11 +1,19 @@
+import { useScroll } from "@/contexts/ScrollContext"
 import { Button } from "@/shared-components/Button"
 import { faAngleDown, faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image"
+import { useRef, useEffect } from "react"
 
 export function HeroSection() {
+    const ref = useRef<HTMLDivElement>(null)
+    const { register } = useScroll()
+    useEffect(() => {
+        register("hero", ref)
+    }, [register])
     return (
         <div
+            ref={ref}
             style={{
                 width: "100%",
                 height: "100vh",
@@ -27,6 +35,7 @@ export function HeroSection() {
                     maxWidth: "915px",
                     marginInline: "100px",
                     zIndex: 2,
+                    pointerEvents: "none",
                 }}
             >
                 <div
@@ -86,6 +95,7 @@ export function HeroSection() {
 }
 
 function Overlays() {
+    const { scrollTo } = useScroll()
     return (
         <>
             <div
@@ -119,7 +129,6 @@ function Overlays() {
                     alignItems: "center",
                     paddingBottom: "32px",
                     pointerEvents: "none",
-                    zIndex: 2,
                 }}
             >
                 <FontAwesomeIcon
@@ -127,6 +136,12 @@ function Overlays() {
                     style={{
                         color: "var(--color-brand-orange)",
                         fontSize: "18px",
+                        cursor: "pointer",
+                        pointerEvents: "auto",
+                        zIndex: 2,
+                    }}
+                    onClick={() => {
+                        scrollTo("packages")
                     }}
                 />
             </div>
@@ -135,15 +150,18 @@ function Overlays() {
 }
 
 function Navbar() {
+    const { scrollTo } = useScroll()
     return (
         <div
             style={{
+                position: "relative",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
                 paddingInline: "100px",
                 paddingBlock: "20px",
                 zIndex: 2,
+                pointerEvents: "auto",
             }}
         >
             <div
@@ -174,12 +192,18 @@ function Navbar() {
                     style={{
                         cursor: "pointer",
                     }}
+                    onClick={() => {
+                        scrollTo("hero")
+                    }}
                 >
                     Home
                 </div>
                 <div
                     style={{
                         cursor: "pointer",
+                    }}
+                    onClick={() => {
+                        scrollTo("packages")
                     }}
                 >
                     Services
@@ -188,6 +212,9 @@ function Navbar() {
                     style={{
                         cursor: "pointer",
                     }}
+                    onClick={() => {
+                        scrollTo("contact")
+                    }}
                 >
                     Contact
                 </div>
@@ -195,7 +222,9 @@ function Navbar() {
             <Button
                 text="CONTACT US"
                 rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
-                onClick={() => {}}
+                onClick={() => {
+                    scrollTo("contact")
+                }}
             />
         </div>
     )

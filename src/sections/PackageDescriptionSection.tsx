@@ -1,10 +1,18 @@
 import Image from "next/image"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useScroll } from "@/contexts/ScrollContext"
+import { useRef, useEffect } from "react"
 
 export function PackageDescriptionSection() {
+    const ref = useRef<HTMLDivElement>(null)
+    const { register } = useScroll()
+    useEffect(() => {
+        register("packages", ref)
+    }, [register])
     return (
         <div
+            ref={ref}
             style={{
                 display: "flex",
                 flexDirection: "column",
@@ -107,8 +115,14 @@ function PackageDescription({
     imageLocation: "left" | "right"
     packageNumber: string
 }) {
+    const ref = useRef<HTMLDivElement>(null)
+    const { register, scrollTo } = useScroll()
+    useEffect(() => {
+        register(p.id, ref)
+    }, [p.id, register])
     return (
         <div
+            ref={ref}
             style={{
                 display: "flex",
                 flexDirection:
@@ -208,6 +222,9 @@ function PackageDescription({
                             gap: "16px",
                             cursor: "pointer",
                             width: "fit-content",
+                        }}
+                        onClick={() => {
+                            scrollTo("contact")
                         }}
                     >
                         <div

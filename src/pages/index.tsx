@@ -4,6 +4,7 @@ import { PackageDescriptionSection } from "@/sections/PackageDescriptionSection"
 import { ContactSection } from "@/sections/ContactSection"
 import { HeroSection } from "@/sections/HeroSection"
 import { Footer } from "@/sections/Footer"
+import { ScrollProvider } from "@/contexts/ScrollContext"
 
 export const cormorant = Cormorant_Garamond({
     subsets: ["latin"],
@@ -54,10 +55,12 @@ export default function Home() {
                         fontFamily: "var(--font-dm-sans)",
                     }}
                 >
-                    <HeroSection />
-                    <PackageDescriptionSection />
-                    <ContactSection />
-                    <Footer />
+                    <ScrollProvider>
+                        <HeroSection />
+                        <PackageDescriptionSection />
+                        <ContactSection />
+                        <Footer />
+                    </ScrollProvider>
                 </div>
             </div>
         </>

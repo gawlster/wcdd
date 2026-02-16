@@ -1,8 +1,16 @@
+import { useScroll } from "@/contexts/ScrollContext"
 import Image from "next/image"
+import { useEffect, useRef } from "react"
 
 export function Footer() {
+    const ref = useRef<HTMLDivElement>(null)
+    const { register, scrollTo } = useScroll()
+    useEffect(() => {
+        register("footer", ref)
+    }, [register])
     return (
         <div
+            ref={ref}
             style={{
                 width: "100%",
                 paddingBlock: "60px",
@@ -90,6 +98,9 @@ export function Footer() {
                                 cursor: "pointer",
                                 fontWeight: 300,
                             }}
+                            onClick={() => {
+                                scrollTo("hightide")
+                            }}
                         >
                             High Tide Treatment
                         </div>
@@ -101,6 +112,9 @@ export function Footer() {
                                 cursor: "pointer",
                                 fontWeight: 300,
                             }}
+                            onClick={() => {
+                                scrollTo("coastal")
+                            }}
                         >
                             Coastal Cabin Revival
                         </div>
@@ -111,6 +125,9 @@ export function Footer() {
                                 color: "var(--color-faded-text)",
                                 cursor: "pointer",
                                 fontWeight: 300,
+                            }}
+                            onClick={() => {
+                                scrollTo("shoreline")
                             }}
                         >
                             Shoreline Sweep
@@ -165,6 +182,9 @@ export function Footer() {
                                 color: "var(--color-faded-text)",
                                 cursor: "pointer",
                                 fontWeight: 300,
+                            }}
+                            onClick={() => {
+                                scrollTo("contact")
                             }}
                         >
                             Request a Quote

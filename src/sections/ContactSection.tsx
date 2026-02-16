@@ -1,3 +1,4 @@
+import { useScroll } from "@/contexts/ScrollContext"
 import { Button } from "@/shared-components/Button"
 import {
     faArrowRight,
@@ -6,7 +7,14 @@ import {
     faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react"
+import {
+    Dispatch,
+    SetStateAction,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react"
 
 type InputState = {
     fieldName: string
@@ -26,6 +34,11 @@ const getDefaultInputState = (fieldName: string) => {
 const defaultSubmissionError =
     "Something went wrong. Try again later or contact us for assistance."
 export function ContactSection() {
+    const ref = useRef<HTMLDivElement>(null)
+    const { register } = useScroll()
+    useEffect(() => {
+        register("contact", ref)
+    }, [register])
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [didSendMessage, setDidSendMessage] = useState(false)
     const [name, setName] = useState(getDefaultInputState("Name"))
@@ -88,6 +101,7 @@ export function ContactSection() {
     }, [email, message, name, phone])
     return (
         <div
+            ref={ref}
             style={{
                 paddingBlock: "100px",
                 backgroundColor: "var(--color-brand-gray-light)",
