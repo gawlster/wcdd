@@ -4,12 +4,12 @@ export function Button({
     text,
     rightIcon,
     onClick,
-    disabled,
+    disabled = false,
 }: {
     text: string
     rightIcon: ReactNode
     onClick: () => void
-    disabled: boolean
+    disabled?: boolean
 }) {
     return (
         <button
@@ -39,7 +39,6 @@ export function Button({
                     letterSpacing: "2.1px",
                     fontWeight: 500,
                     textTransform: "capitalize",
-                    transform: "translateY(1px)",
                 }}
             >
                 {text}
