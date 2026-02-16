@@ -1,4 +1,5 @@
 import { useScroll } from "@/contexts/ScrollContext"
+import { useIsMobile } from "@/hooks/useMediaQuery"
 import { Button } from "@/shared-components/Button"
 import { faAngleDown, faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -151,6 +152,7 @@ function Overlays() {
 
 function Navbar() {
     const { scrollTo } = useScroll()
+    const isMobile = useIsMobile()
     return (
         <div
             style={{
@@ -182,7 +184,7 @@ function Navbar() {
             </div>
             <div
                 style={{
-                    display: "flex",
+                    display: isMobile ? "none" : "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     gap: "32px",

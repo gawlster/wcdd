@@ -1,4 +1,5 @@
 import { useScroll } from "@/contexts/ScrollContext"
+import { useIsMobile } from "@/hooks/useMediaQuery"
 import { Button } from "@/shared-components/Button"
 import {
     faArrowRight,
@@ -99,6 +100,7 @@ export function ContactSection() {
         }
         setDidSendMessage(true)
     }, [email, message, name, phone])
+    const isMobile = useIsMobile()
     return (
         <div
             ref={ref}
@@ -187,6 +189,7 @@ export function ContactSection() {
                         display: "flex",
                         justifyContent: "center",
                         gap: "24px",
+                        flexDirection: isMobile ? "column" : "row",
                     }}
                 >
                     <Input
@@ -317,6 +320,7 @@ export function ContactSection() {
                         justifyContent: "center",
                         alignItems: "start",
                         gap: "40px",
+                        flexWrap: "wrap",
                     }}
                 >
                     <div

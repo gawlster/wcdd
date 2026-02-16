@@ -1,4 +1,5 @@
 import { useScroll } from "@/contexts/ScrollContext"
+import { useIsMobile } from "@/hooks/useMediaQuery"
 import Image from "next/image"
 import { useEffect, useRef } from "react"
 
@@ -8,6 +9,7 @@ export function Footer() {
     useEffect(() => {
         register("footer", ref)
     }, [register])
+    const isMobile = useIsMobile()
     return (
         <div
             ref={ref}
@@ -17,6 +19,7 @@ export function Footer() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                paddingInline: "40px",
             }}
         >
             <div
@@ -34,6 +37,7 @@ export function Footer() {
                         display: "flex",
                         gap: "44px",
                         justifyContent: "space-between",
+                        flexDirection: isMobile ? "column" : "row",
                     }}
                 >
                     <div
@@ -205,6 +209,8 @@ export function Footer() {
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
+                        flexWrap: "wrap",
+                        gap: "4px",
                     }}
                 >
                     <div
