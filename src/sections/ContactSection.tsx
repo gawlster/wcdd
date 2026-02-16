@@ -278,20 +278,144 @@ export function ContactSection() {
                         </div>
                     </div>
                 )}
-                <Button
-                    text="SEND MESSAGE"
-                    rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
-                    onClick={handleFormSubmit}
-                    disabled={didSendMessage || isSubmitting}
+                <div
+                    style={{
+                        marginBlock: "16px",
+                    }}
+                >
+                    <Button
+                        text="SEND MESSAGE"
+                        rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
+                        onClick={handleFormSubmit}
+                        disabled={didSendMessage || isSubmitting}
+                    />
+                </div>
+                <div
+                    style={{
+                        width: "100%",
+                        height: "1px",
+                        background: "var(--color-more-faded-text)",
+                    }}
                 />
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "start",
+                        gap: "40px",
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "8px",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <div
+                            style={{
+                                color: "var(--color-brand-orange)",
+                                fontSize: "12px",
+                                lineHeight: "16px",
+                                letterSpacing: "0.6px",
+                                fontWeight: 300,
+                            }}
+                        >
+                            PHONE
+                        </div>
+                        <div
+                            style={{
+                                fontSize: "16px",
+                                lineHeight: "24px",
+                                fontWeight: 300,
+                            }}
+                        >
+                            (403) 835-1526
+                        </div>
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "8px",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <div
+                            style={{
+                                color: "var(--color-brand-orange)",
+                                fontSize: "12px",
+                                lineHeight: "16px",
+                                letterSpacing: "0.6px",
+                                fontWeight: 300,
+                            }}
+                        >
+                            EMAIL
+                        </div>
+                        <div
+                            style={{
+                                fontSize: "16px",
+                                lineHeight: "24px",
+                                fontWeight: 300,
+                            }}
+                        >
+                            westcoastdiamonddetail@gmail.com
+                        </div>
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "8px",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <div
+                            style={{
+                                color: "var(--color-brand-orange)",
+                                fontSize: "12px",
+                                lineHeight: "16px",
+                                letterSpacing: "0.6px",
+                                fontWeight: 300,
+                            }}
+                        >
+                            HOURS
+                        </div>
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    fontSize: "16px",
+                                    lineHeight: "24px",
+                                    fontWeight: 300,
+                                }}
+                            >
+                                Mon-Sat: 8AM - 6PM
+                            </div>
+                            <div
+                                style={{
+                                    fontSize: "16px",
+                                    lineHeight: "24px",
+                                    fontWeight: 300,
+                                    color: "var(--color-faded-text)",
+                                }}
+                            >
+                                (Or by request)
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div
-                style={{
-                    width: "100%",
-                    height: "1px",
-                    backgroundColor: "var(--color-faded-text)",
-                }}
-            />
         </div>
     )
 }
