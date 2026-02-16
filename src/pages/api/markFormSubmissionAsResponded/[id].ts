@@ -1,3 +1,4 @@
+import { prisma } from "@/lib/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
 
 export default async function handler(
@@ -13,7 +14,7 @@ export default async function handler(
         return res.status(400).json({ error: "Invalid query params" })
     }
     try {
-        await prisma?.formSubmission.update({
+        await prisma.formSubmission.update({
             where: {
                 id,
             },
