@@ -3,6 +3,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useScroll } from "@/contexts/ScrollContext"
 import { useRef, useEffect } from "react"
+import { useIsMobile } from "@/hooks/useMediaQuery"
 
 export function PackageDescriptionSection() {
     const ref = useRef<HTMLDivElement>(null)
@@ -10,6 +11,7 @@ export function PackageDescriptionSection() {
     useEffect(() => {
         register("packages", ref)
     }, [register])
+    const isMobile = useIsMobile()
     return (
         <div
             ref={ref}
@@ -19,6 +21,7 @@ export function PackageDescriptionSection() {
                 justifyContent: "center",
                 gap: "100px",
                 paddingBlock: "100px",
+                paddingInline: "20px",
             }}
         >
             <div
@@ -26,9 +29,9 @@ export function PackageDescriptionSection() {
                     fontFamily: "var(--font-cormorant)",
                     fontWeight: "400",
                     fontStyle: "semibold",
-                    fontSize: "80px",
+                    fontSize: isMobile ? "48px" : "80px",
                     textAlign: "center",
-                    lineHeight: "105px",
+                    lineHeight: isMobile ? "52px" : "105px",
                 }}
             >
                 Shine Like the Coast
@@ -120,15 +123,19 @@ function PackageDescription({
     useEffect(() => {
         register(p.id, ref)
     }, [p.id, register])
+    const isMobile = useIsMobile()
     return (
         <div
             ref={ref}
             style={{
                 display: "flex",
-                flexDirection:
-                    imageLocation === "right" ? "row" : "row-reverse",
+                flexDirection: isMobile
+                    ? "column-reverse"
+                    : imageLocation === "right"
+                    ? "row"
+                    : "row-reverse",
                 justifyContent: "center",
-                gap: "80px",
+                gap: isMobile ? "0px" : "80px",
             }}
         >
             <div
@@ -136,13 +143,14 @@ function PackageDescription({
                     display: "flex",
                     flexDirection: "column",
                     gap: "20px",
+                    width: "100%",
                     maxWidth: "524px",
                 }}
             >
                 <div
                     style={{
                         fontFamily: "var(--font-cormorant)",
-                        fontSize: "224px",
+                        fontSize: isMobile ? "128px" : "224px",
                         fontWeight: "300",
                         color: "#262E36",
                     }}
@@ -165,7 +173,7 @@ function PackageDescription({
                     >
                         <div
                             style={{
-                                width: "48px",
+                                width: isMobile ? "20px" : "48px",
                                 height: "1px",
                                 background: "var(--color-brand-orange)",
                             }}
@@ -186,8 +194,8 @@ function PackageDescription({
                             fontFamily: "var(--font-cormorant)",
                             fontWeight: "400",
                             fontStyle: "medium",
-                            fontSize: "60px",
-                            lineHeight: "60px",
+                            fontSize: isMobile ? "40px" : "60px",
+                            lineHeight: isMobile ? "40px" : "60px",
                         }}
                     >
                         {p.title}
@@ -250,8 +258,8 @@ function PackageDescription({
                 style={{
                     overflow: "hidden",
                     borderRadius: "8px",
-                    width: "560px",
-                    height: "746px",
+                    width: isMobile ? "100%" : "560px",
+                    aspectRatio: "0.75",
                     position: "relative",
                 }}
             >

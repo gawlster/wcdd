@@ -12,6 +12,7 @@ export function HeroSection() {
     useEffect(() => {
         register("hero", ref)
     }, [register])
+    const isMobile = useIsMobile()
     return (
         <div
             ref={ref}
@@ -34,7 +35,7 @@ export function HeroSection() {
                     display: "flex",
                     alignItems: "center",
                     maxWidth: "915px",
-                    marginInline: "100px",
+                    marginInline: isMobile ? "20px" : "100px",
                     zIndex: 2,
                     pointerEvents: "none",
                 }}
@@ -60,8 +61,8 @@ export function HeroSection() {
                         >
                             <div
                                 style={{
-                                    width: "64px",
-                                    height: "2px",
+                                    width: isMobile ? "48px" : "64px",
+                                    height: isMobile ? "1px" : "2px",
                                     backgroundColor:
                                         "var(--color-brand-orange)",
                                 }}
@@ -69,7 +70,7 @@ export function HeroSection() {
                             <div
                                 style={{
                                     color: "var(--color-brand-orange)",
-                                    fontSize: "24px",
+                                    fontSize: isMobile ? "12px" : "24px",
                                     lineHeight: "20px",
                                     letterSpacing: "4.2px",
                                     fontWeight: 300,
@@ -83,7 +84,7 @@ export function HeroSection() {
                                 fontFamily: "var(--font-cormorant)",
                                 fontWeight: 500,
                                 fontStyle: "semibold",
-                                fontSize: "105px",
+                                fontSize: isMobile ? "72px" : "105px",
                             }}
                         >
                             Showroom Quality, Delivered to Your Door
@@ -160,7 +161,7 @@ function Navbar() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                paddingInline: "100px",
+                paddingInline: isMobile ? "20px" : "100px",
                 paddingBlock: "20px",
                 zIndex: 2,
                 pointerEvents: "auto",
