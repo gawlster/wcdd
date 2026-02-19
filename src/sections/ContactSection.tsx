@@ -1,6 +1,7 @@
 import { useScroll } from "@/contexts/ScrollContext"
-import { useIsMobile } from "@/hooks/useMediaQuery"
+import { useIsMobile } from "@/hooks/useIsMobile"
 import { Button } from "@/shared-components/Button"
+import { Text } from "@/shared-components/Text"
 import {
     faArrowRight,
     faCheckCircle,
@@ -112,6 +113,7 @@ export function ContactSection() {
                 gap: "40px",
                 justifyContent: "center",
                 alignItems: "center",
+                paddingInline: "24px",
             }}
         >
             <div
@@ -124,45 +126,43 @@ export function ContactSection() {
             >
                 <div
                     style={{
-                        width: "48px",
+                        width: isMobile ? "36px" : "48px",
                         height: "1px",
                         backgroundColor: "var(--color-brand-orange)",
                     }}
                 />
-                <div
+                <Text
+                    size="sm"
                     style={{
                         color: "var(--color-brand-orange)",
-                        fontWeight: "400",
-                        fontSize: "12px",
                         letterSpacing: "3px",
+                        fontWeight: 400,
                     }}
                 >
                     GET IN TOUCH
-                </div>
+                </Text>
                 <div
                     style={{
-                        width: "48px",
+                        width: isMobile ? "36px" : "48px",
                         height: "1px",
                         backgroundColor: "var(--color-brand-orange)",
                     }}
                 />
             </div>
-            <div
+            <Text
+                size="xxl"
                 style={{
                     fontFamily: "var(--font-cormorant)",
                     fontWeight: "300",
-                    fontSize: "60px",
                     textAlign: "center",
-                    lineHeight: "60px",
                 }}
             >
                 Request a Quote
-            </div>
-            <div
+            </Text>
+            <Text
+                size="lg"
                 style={{
                     fontWeight: "300",
-                    fontSize: "16px",
-                    lineHeight: "24px",
                     textAlign: "center",
                     color: "var(--color-faded-text)",
                 }}
@@ -170,12 +170,11 @@ export function ContactSection() {
                 {
                     "Ready to give your vehicle the care it deserves? Reach out and we'll get you scheduled"
                 }
-            </div>
+            </Text>
             <div
                 style={{
                     width: "100%",
                     maxWidth: "850px",
-                    paddingInline: "24px",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
@@ -319,7 +318,7 @@ export function ContactSection() {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "start",
-                        gap: "40px",
+                        gap: "28px 40px",
                         flexWrap: "wrap",
                     }}
                 >
@@ -332,26 +331,24 @@ export function ContactSection() {
                             alignItems: "center",
                         }}
                     >
-                        <div
+                        <Text
+                            size="sm"
                             style={{
                                 color: "var(--color-brand-orange)",
-                                fontSize: "12px",
-                                lineHeight: "16px",
                                 letterSpacing: "0.6px",
                                 fontWeight: 300,
                             }}
                         >
                             PHONE
-                        </div>
-                        <div
+                        </Text>
+                        <Text
+                            size="lg"
                             style={{
-                                fontSize: "16px",
-                                lineHeight: "24px",
                                 fontWeight: 300,
                             }}
                         >
                             (403) 835-1526
-                        </div>
+                        </Text>
                     </div>
                     <div
                         style={{
@@ -362,26 +359,24 @@ export function ContactSection() {
                             alignItems: "center",
                         }}
                     >
-                        <div
+                        <Text
+                            size="sm"
                             style={{
                                 color: "var(--color-brand-orange)",
-                                fontSize: "12px",
-                                lineHeight: "16px",
                                 letterSpacing: "0.6px",
                                 fontWeight: 300,
                             }}
                         >
                             EMAIL
-                        </div>
-                        <div
+                        </Text>
+                        <Text
+                            size="lg"
                             style={{
-                                fontSize: "16px",
-                                lineHeight: "24px",
                                 fontWeight: 300,
                             }}
                         >
                             westcoastdiamonddetail@gmail.com
-                        </div>
+                        </Text>
                     </div>
                     <div
                         style={{
@@ -392,17 +387,16 @@ export function ContactSection() {
                             alignItems: "center",
                         }}
                     >
-                        <div
+                        <Text
+                            size="sm"
                             style={{
                                 color: "var(--color-brand-orange)",
-                                fontSize: "12px",
-                                lineHeight: "16px",
                                 letterSpacing: "0.6px",
                                 fontWeight: 300,
                             }}
                         >
                             HOURS
-                        </div>
+                        </Text>
                         <div
                             style={{
                                 display: "flex",
@@ -411,25 +405,23 @@ export function ContactSection() {
                                 alignItems: "center",
                             }}
                         >
-                            <div
+                            <Text
+                                size="lg"
                                 style={{
-                                    fontSize: "16px",
-                                    lineHeight: "24px",
                                     fontWeight: 300,
                                 }}
                             >
-                                Mon-Sat: 8AM - 6PM
-                            </div>
-                            <div
+                                24 / 7
+                            </Text>
+                            <Text
+                                size="lg"
                                 style={{
-                                    fontSize: "16px",
-                                    lineHeight: "24px",
                                     fontWeight: 300,
                                     color: "var(--color-faded-text)",
                                 }}
                             >
-                                (Or by request)
-                            </div>
+                                (By appointment)
+                            </Text>
                         </div>
                     </div>
                 </div>
@@ -455,6 +447,7 @@ function Input({
     isMultiline?: boolean
     disabled: boolean
 }) {
+    const isMobile = useIsMobile()
     const handleInput = useCallback(
         (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             setValue(e.target.value)
@@ -471,26 +464,20 @@ function Input({
                 gap: "4px",
             }}
         >
-            <div
-                className="label"
-                style={{
-                    fontSize: "14px",
-                    lineHeight: "20px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                }}
-            >
+            <Text size="md" style={{}}>
                 <div
                     style={{
                         color: !!error ? "var(--color-brand-red)" : undefined,
                         fontWeight: !!error ? 600 : undefined,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
                     }}
                 >
                     {label}
                 </div>
                 {!!error && <ErrorTooltip error={error} />}
-            </div>
+            </Text>
             {isMultiline ? (
                 <textarea
                     value={value}
@@ -506,10 +493,11 @@ function Input({
                         color: disabled
                             ? "var(--color-less-faded-text)"
                             : "var(--color-brand-white)",
-                        fontSize: "16px",
+                        fontSize: isMobile ? "14px" : "16px",
                         fontFamily: "var(--font-dm-sans)",
                         resize: "vertical",
                     }}
+                    rows={4}
                 />
             ) : (
                 <input
@@ -526,7 +514,7 @@ function Input({
                         color: disabled
                             ? "var(--color-less-faded-text)"
                             : "var(--color-brand-white)",
-                        fontSize: "16px",
+                        fontSize: isMobile ? "14px" : "16px",
                         fontFamily: "var(--font-dm-sans)",
                     }}
                 />

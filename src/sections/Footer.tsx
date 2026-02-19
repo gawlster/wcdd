@@ -1,5 +1,6 @@
 import { useScroll } from "@/contexts/ScrollContext"
-import { useIsMobile } from "@/hooks/useMediaQuery"
+import { useIsMobile } from "@/hooks/useIsMobile"
+import { Text } from "@/shared-components/Text"
 import Image from "next/image"
 import { useEffect, useRef } from "react"
 
@@ -51,8 +52,8 @@ export function Footer() {
                         <div
                             style={{
                                 position: "relative",
-                                width: "80px",
-                                height: "80px",
+                                width: isMobile ? "60px" : "80px",
+                                aspectRatio: "1",
                             }}
                         >
                             <Image
@@ -64,15 +65,15 @@ export function Footer() {
                                 }}
                             />
                         </div>
-                        <div
+                        <Text
+                            size="md"
                             style={{
-                                fontSize: "14px",
                                 color: "var(--color-faded-text)",
                             }}
                         >
                             Premium mobile auto detailing. We bring showroom
                             quality to your driveway.
-                        </div>
+                        </Text>
                     </div>
                     <div
                         style={{
@@ -82,22 +83,20 @@ export function Footer() {
                             flex: 1,
                         }}
                     >
-                        <div
+                        <Text
+                            size="xl"
                             style={{
                                 color: "var(--color-brand-orange)",
                                 fontFamily: "var(--font-cormorant)",
                                 fontWeight: 400,
-                                fontSize: "22px",
-                                lineHeight: "20px",
                                 letterSpacing: "0.7px",
                             }}
                         >
                             Services
-                        </div>
-                        <div
+                        </Text>
+                        <Text
+                            size="md"
                             style={{
-                                fontSize: "14px",
-                                lineHeight: "20px",
                                 color: "var(--color-faded-text)",
                                 cursor: "pointer",
                                 fontWeight: 300,
@@ -107,11 +106,10 @@ export function Footer() {
                             }}
                         >
                             High Tide Treatment
-                        </div>
-                        <div
+                        </Text>
+                        <Text
+                            size="md"
                             style={{
-                                fontSize: "14px",
-                                lineHeight: "20px",
                                 color: "var(--color-faded-text)",
                                 cursor: "pointer",
                                 fontWeight: 300,
@@ -121,11 +119,10 @@ export function Footer() {
                             }}
                         >
                             Coastal Cabin Revival
-                        </div>
-                        <div
+                        </Text>
+                        <Text
+                            size="md"
                             style={{
-                                fontSize: "14px",
-                                lineHeight: "20px",
                                 color: "var(--color-faded-text)",
                                 cursor: "pointer",
                                 fontWeight: 300,
@@ -135,7 +132,7 @@ export function Footer() {
                             }}
                         >
                             Shoreline Sweep
-                        </div>
+                        </Text>
                     </div>
                     <div
                         style={{
@@ -145,44 +142,40 @@ export function Footer() {
                             flex: 1,
                         }}
                     >
-                        <div
+                        <Text
+                            size="xl"
                             style={{
                                 color: "var(--color-brand-orange)",
                                 fontFamily: "var(--font-cormorant)",
                                 fontWeight: 400,
-                                fontSize: "22px",
-                                lineHeight: "20px",
                                 letterSpacing: "0.7px",
                             }}
                         >
                             Contact
-                        </div>
-                        <div
+                        </Text>
+                        <Text
+                            size="md"
                             style={{
-                                fontSize: "14px",
-                                lineHeight: "20px",
                                 color: "var(--color-faded-text)",
                                 cursor: "pointer",
                                 fontWeight: 300,
                             }}
                         >
                             (403) 835-1526
-                        </div>
-                        <div
+                        </Text>
+                        <Text
+                            size="md"
                             style={{
-                                fontSize: "14px",
-                                lineHeight: "20px",
                                 color: "var(--color-faded-text)",
                                 cursor: "pointer",
                                 fontWeight: 300,
                             }}
                         >
                             westcoastdiamonddetail@gmail.com
-                        </div>
-                        <div
+                        </Text>
+                        <Text
+                            size="md"
                             style={{
-                                fontSize: "14px",
-                                lineHeight: "20px",
                                 color: "var(--color-faded-text)",
                                 cursor: "pointer",
                                 fontWeight: 300,
@@ -192,7 +185,7 @@ export function Footer() {
                             }}
                         >
                             Request a Quote
-                        </div>
+                        </Text>
                     </div>
                 </div>
                 <div id="spacer1" />
@@ -210,29 +203,27 @@ export function Footer() {
                         justifyContent: "space-between",
                         alignItems: "center",
                         flexWrap: "wrap",
-                        gap: "4px",
+                        gap: "8px 4px",
                     }}
                 >
-                    <div
+                    <Text
+                        size="md"
                         style={{
                             fontWeight: 300,
-                            fontSize: "14px",
-                            lineHeight: "16px",
                             color: "var(--color-faded-text)",
                         }}
                     >
                         © 2026 Coastal Detailing. All rights reserved.
-                    </div>
-                    <div
+                    </Text>
+                    <Text
+                        size="md"
                         style={{
                             fontWeight: 300,
-                            fontSize: "14px",
-                            lineHeight: "16px",
                             color: "var(--color-faded-text)",
                         }}
                     >
                         Terms & Privacy
-                    </div>
+                    </Text>
                 </div>
             </div>
         </div>

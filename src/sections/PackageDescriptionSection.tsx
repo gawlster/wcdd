@@ -3,7 +3,8 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useScroll } from "@/contexts/ScrollContext"
 import { useRef, useEffect } from "react"
-import { useIsMobile } from "@/hooks/useMediaQuery"
+import { useIsMobile } from "@/hooks/useIsMobile"
+import { Text } from "@/shared-components/Text"
 
 export function PackageDescriptionSection() {
     const ref = useRef<HTMLDivElement>(null)
@@ -19,23 +20,22 @@ export function PackageDescriptionSection() {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                gap: "100px",
+                gap: isMobile ? "40px" : "100px",
                 paddingBlock: "100px",
                 paddingInline: "20px",
             }}
         >
-            <div
+            <Text
+                size="xxl"
                 style={{
                     fontFamily: "var(--font-cormorant)",
                     fontWeight: "400",
                     fontStyle: "semibold",
-                    fontSize: isMobile ? "48px" : "80px",
                     textAlign: "center",
-                    lineHeight: isMobile ? "52px" : "105px",
                 }}
             >
                 Shine Like the Coast
-            </div>
+            </Text>
             <div
                 style={{
                     display: "flex",
@@ -55,17 +55,16 @@ export function PackageDescriptionSection() {
                     />
                 ))}
             </div>
-            <div
+            <Text
+                size="lg"
                 style={{
-                    fontSize: "18px",
-                    lineHeight: "20px",
                     textAlign: "center",
                     color: "var(--color-faded-text)",
                 }}
             >
                 Prices vary based on vehicle size. Add-ons available for
                 complete customization.
-            </div>
+            </Text>
         </div>
     )
 }
@@ -129,20 +128,19 @@ function PackageDescription({
             ref={ref}
             style={{
                 display: "flex",
-                flexDirection: isMobile
-                    ? "column-reverse"
-                    : imageLocation === "right"
-                    ? "row"
-                    : "row-reverse",
+                flexDirection:
+                    imageLocation === "right" ? "row" : "row-reverse",
+                flexWrap: "wrap",
                 justifyContent: "center",
-                gap: isMobile ? "0px" : "80px",
+                columnGap: "80px",
+                rowGap: "36px",
             }}
         >
             <div
                 style={{
                     display: "flex",
                     flexDirection: "column",
-                    gap: "20px",
+                    gap: isMobile ? "16px" : "20px",
                     width: "100%",
                     maxWidth: "524px",
                 }}
@@ -161,7 +159,7 @@ function PackageDescription({
                     style={{
                         display: "flex",
                         flexDirection: "column",
-                        gap: "28px",
+                        gap: isMobile ? "20px" : "28px",
                     }}
                 >
                     <div
@@ -178,56 +176,53 @@ function PackageDescription({
                                 background: "var(--color-brand-orange)",
                             }}
                         />
-                        <div
+                        <Text
+                            size="sm"
                             style={{
                                 color: "var(--color-brand-orange)",
                                 fontWeight: "400",
-                                fontSize: "12px",
                                 letterSpacing: "3px",
                             }}
                         >
                             {p.subtitle.toUpperCase()}
-                        </div>
+                        </Text>
                     </div>
-                    <div
+                    <Text
+                        size="xxl"
                         style={{
                             fontFamily: "var(--font-cormorant)",
                             fontWeight: "400",
                             fontStyle: "medium",
-                            fontSize: isMobile ? "40px" : "60px",
-                            lineHeight: isMobile ? "40px" : "60px",
                         }}
                     >
                         {p.title}
-                    </div>
-                    <div
+                    </Text>
+                    <Text
+                        size="xl"
                         style={{
                             fontFamily: "var(--font-cormorant)",
                             fontWeight: "300",
                             fontStyle: "regular",
-                            fontSize: "24px",
-                            lineHeight: "32px",
                             color: "var(--color-brand-orange)",
                         }}
                     >
                         {p.priceRange}
-                    </div>
-                    <div
+                    </Text>
+                    <Text
+                        size="lg"
                         style={{
                             width: "100%",
                             fontWeight: "300",
                             fontStyle: "regular",
-                            fontSize: "16px",
-                            lineHeight: "26px",
                             color: "var(--color-faded-text)",
                         }}
                     >
                         {p.description}
-                    </div>
+                    </Text>
                     <div
                         style={{
                             display: "flex",
-                            gap: "16px",
+                            gap: isMobile ? "8px" : "16px",
                             cursor: "pointer",
                             width: "fit-content",
                         }}
@@ -235,17 +230,16 @@ function PackageDescription({
                             scrollTo("contact")
                         }}
                     >
-                        <div
+                        <Text
+                            size="md"
                             style={{
                                 fontWeight: "300",
-                                fontSize: "14px",
-                                lineHeight: "20px",
                                 letterSpacing: "0.7px",
                                 color: "var(--color-brand-orange)",
                             }}
                         >
                             Book Now
-                        </div>
+                        </Text>
                         <FontAwesomeIcon
                             icon={faArrowRight}
                             fontWeight={300}

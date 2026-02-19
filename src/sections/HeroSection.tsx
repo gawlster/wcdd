@@ -1,6 +1,7 @@
 import { useScroll } from "@/contexts/ScrollContext"
-import { useIsMobile } from "@/hooks/useMediaQuery"
+import { useIsMobile } from "@/hooks/useIsMobile"
 import { Button } from "@/shared-components/Button"
+import { Text } from "@/shared-components/Text"
 import { faAngleDown, faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image"
@@ -61,34 +62,37 @@ export function HeroSection() {
                         >
                             <div
                                 style={{
-                                    width: isMobile ? "48px" : "64px",
+                                    maxWidth: isMobile ? "24px" : "64px",
+                                    width: "100%",
+                                    minWidth: "0",
+                                    flexShrink: 1,
                                     height: isMobile ? "1px" : "2px",
                                     backgroundColor:
                                         "var(--color-brand-orange)",
                                 }}
                             />
-                            <div
+                            <Text
+                                size="xl"
                                 style={{
                                     color: "var(--color-brand-orange)",
-                                    fontSize: isMobile ? "12px" : "24px",
-                                    lineHeight: "20px",
                                     letterSpacing: "4.2px",
                                     fontWeight: 300,
+                                    flexGrow: 1,
                                 }}
                             >
                                 MOBILE AUTO DETAILING
-                            </div>
+                            </Text>
                         </div>
-                        <div
+                        <Text
+                            size="xxxl"
                             style={{
                                 fontFamily: "var(--font-cormorant)",
                                 fontWeight: 500,
                                 fontStyle: "semibold",
-                                fontSize: isMobile ? "72px" : "105px",
                             }}
                         >
                             Showroom Quality, Delivered to Your Door
-                        </div>
+                        </Text>
                     </div>
                 </div>
             </div>
