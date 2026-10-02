@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme inline {
+    --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+    --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+}
+
+@theme {
+    --color-bg: #141a1f;
+    --color-surface: #1a2026;
+    --color-fg: #e9e7e2;
+    --color-muted: #7e8c9a;
+    --color-muted-light: #9aa7b3;
+    --color-line: #303841;
+    --color-numeral: #262e36;
+    --color-accent: #ddac3c;
+    --color-accent-hover: #b88424;
+    --color-on-accent: #131a20;
+    --color-on-accent-hover: #1f2a34;
+    --color-success: #3fa86a;
+    --color-success-bg: #1e3a2a;
+    --color-danger: #b24a4a;
+    --color-danger-bg: #3a1e1e;
+}
+
+/* Responsive type scale: mobile size, then md and up */
+@utility type-sm {
+    font-size: 10px;
+    @variant md {
+        font-size: 12px;
+    }
+}
+@utility type-md {
+    font-size: 12px;
+    @variant md {
+        font-size: 14px;
+    }
+}
+@utility type-lg {
+    font-size: 14px;
+    @variant md {
+        font-size: 16px;
+    }
+}
+@utility type-xl {
+    font-size: 18px;
+    @variant md {
+        font-size: 22px;
+    }
+}
+@utility type-2xl {
+    font-size: 48px;
+    @variant md {
+        font-size: 60px;
+    }
+}
+@utility type-3xl {
+    font-size: 72px;
+    @variant md {
+        font-size: 105px;
+    }
+}
+
+@layer base {
+    html {
+        line-height: normal;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        html {
+            scroll-behavior: smooth;
+        }
+    }
+    body {
+        @apply bg-bg font-sans text-fg;
+        overflow-x: clip;
+    }
+}
