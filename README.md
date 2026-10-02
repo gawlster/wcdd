@@ -58,12 +58,14 @@ path, so admin actions also check credentials themselves (`isAdminRequest()` in
 2. Against your dev database: `npx prisma migrate dev --name <name>`. Add `--create-only`
    to review or edit the SQL first, e.g. to backfill data.
 3. Commit the generated folder in `prisma/migrations/`.
-4. Production runs `npx prisma migrate deploy` before the new code goes live.
+4. Before merging to `main`, apply it to production by hand; nothing in the deploy does
+   this. Check with `DATABASE_URL="<prod url>" npx prisma migrate status`, then run
+   `DATABASE_URL="<prod url>" npx prisma migrate deploy`.
 
 Migrations run while the previous release is still serving traffic, so destructive changes
 (dropping or renaming columns/tables) ship in two releases: first add the new shape and
-stop using the old one, then drop the old one in a later release. See the `hasResponded`
-note in `schema.prisma`, which is a pending second step of exactly this kind.
+stop using the old one, then drop the old one in a later release. The `responded_at` and
+`drop_has_responded` migrations are an example of exactly this.
 
 ## Scripts
 
