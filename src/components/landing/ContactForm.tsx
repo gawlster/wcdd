@@ -19,10 +19,16 @@ import {
     type ContactInput,
 } from "@/lib/contact-schema"
 
-const emptyValues: ContactInput = { name: "", email: "", phone: "", message: "" }
+const emptyValues: ContactInput = {
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+}
 
 export function ContactForm() {
     const [values, setValues] = useState(emptyValues)
+    const [honeypot, setHoneypot] = useState("")
     const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({})
     const [submitError, setSubmitError] = useState<string>()
     const [didSend, setDidSend] = useState(false)
@@ -49,7 +55,7 @@ export function ContactForm() {
             return
         }
         startTransition(async () => {
-            const result = await submitContact(parsed.data)
+            const result = await submitContact(parsed.data, honeypot)
             if (result.ok) {
                 setDidSend(true)
             } else {
@@ -65,6 +71,20 @@ export function ContactForm() {
             onSubmit={handleSubmit}
             className="flex w-full flex-col items-center justify-center gap-8"
         >
+            {/* Spam honeypot: invisible and unreachable for people; bots that fill every field trip it.
+                Named so browsers won't autofill it for a real visitor. */}
+            <div aria-hidden className="sr-only">
+                <label>
+                    Leave this field blank
+                    <input
+                        name="leave_blank"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={honeypot}
+                        onChange={(e) => setHoneypot(e.target.value)}
+                    />
+                </label>
+            </div>
             <div className="flex w-full flex-col justify-center gap-6 md:flex-row">
                 <Input
                     {...fieldProps("name")}

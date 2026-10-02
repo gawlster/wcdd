@@ -76,7 +76,7 @@ export function Input({
             {error && (
                 <p
                     id={errorId}
-                    className="type-md flex items-center gap-2 text-danger"
+                    className="flex items-center gap-2 type-md text-danger"
                 >
                     <FontAwesomeIcon icon={faExclamationCircle} />
                     {error}

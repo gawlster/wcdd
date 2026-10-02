@@ -56,7 +56,7 @@ function FooterColumn({
 }) {
     return (
         <div className="flex flex-1 flex-col gap-3">
-            <h2 className="type-xl font-serif font-normal tracking-[0.7px] text-accent">
+            <h2 className="font-serif type-xl font-normal tracking-[0.7px] text-accent">
                 {title}
             </h2>
             {children}
@@ -68,7 +68,7 @@ function FooterLink({ href, children }: { href: string; children: ReactNode }) {
     return (
         <a
             href={href}
-            className="type-md w-fit font-light text-muted transition-colors hover:text-fg"
+            className="w-fit type-md font-light text-muted transition-colors hover:text-fg"
         >
             {children}
         </a>

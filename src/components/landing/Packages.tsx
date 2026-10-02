@@ -10,7 +10,7 @@ export function Packages() {
             id="packages"
             className="flex flex-col justify-center gap-10 px-5 py-25 md:gap-25"
         >
-            <h2 className="type-2xl text-center font-serif font-normal">
+            <h2 className="text-center font-serif type-2xl font-normal">
                 Shine Like the Coast
             </h2>
             <div className="flex flex-col items-center justify-center gap-20 px-5">
@@ -23,7 +23,7 @@ export function Packages() {
                     />
                 ))}
             </div>
-            <p className="type-lg text-center text-muted">
+            <p className="text-center type-lg text-muted">
                 Prices vary based on vehicle size. Add-ons available for
                 complete customization.
             </p>
@@ -54,10 +54,10 @@ function PackageCard({
                 </div>
                 <div className="flex flex-col gap-5 md:gap-7">
                     <Eyebrow>{pkg.subtitle}</Eyebrow>
-                    <h3 className="type-2xl font-serif font-normal">
+                    <h3 className="font-serif type-2xl font-normal">
                         {pkg.title}
                     </h3>
-                    <p className="type-xl font-serif font-light text-accent">
+                    <p className="font-serif type-xl font-light text-accent">
                         {pkg.priceRange}
                     </p>
                     <p className="type-lg font-light text-muted">
@@ -65,7 +65,7 @@ function PackageCard({
                     </p>
                     <a
                         href="#contact"
-                        className="type-md flex w-fit items-center gap-2 font-light tracking-[0.7px] text-accent md:gap-4"
+                        className="flex w-fit items-center gap-2 type-md font-light tracking-[0.7px] text-accent md:gap-4"
                     >
                         Book Now
                         <FontAwesomeIcon icon={faArrowRight} />

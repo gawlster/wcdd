@@ -10,10 +10,10 @@ export function ContactSection() {
             className="flex flex-col items-center justify-center gap-10 bg-surface px-6 py-25"
         >
             <Eyebrow both>Get in touch</Eyebrow>
-            <h2 className="type-2xl text-center font-serif font-light">
+            <h2 className="text-center font-serif type-2xl font-light">
                 Request a Quote
             </h2>
-            <p className="type-lg text-center font-light text-muted">
+            <p className="text-center type-lg font-light text-muted">
                 Ready to give your vehicle the care it deserves? Reach out and
                 we&apos;ll get you scheduled
             </p>

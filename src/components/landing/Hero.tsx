@@ -25,11 +25,11 @@ export function Hero() {
                             aria-hidden
                             className="h-px w-full max-w-6 min-w-0 shrink bg-accent md:h-0.5 md:max-w-16"
                         />
-                        <p className="type-xl grow font-light tracking-[4.2px] text-accent">
+                        <p className="grow type-xl font-light tracking-[4.2px] text-accent">
                             MOBILE AUTO DETAILING
                         </p>
                     </div>
-                    <h1 className="type-3xl font-serif font-medium">
+                    <h1 className="font-serif type-3xl font-medium">
                         Showroom Quality, Delivered to Your Door
                     </h1>
                 </div>
