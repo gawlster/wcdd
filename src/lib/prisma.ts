@@ -1,20 +1,13 @@
-import { PrismaClient } from "../generated/prisma/client"
 import { PrismaPg } from "@prisma/adapter-pg"
+import { PrismaClient } from "@/generated/prisma/client"
+import { env } from "./env"
 
-declare global {
-    var prisma: PrismaClient | undefined
-}
+// Cached on globalThis so dev hot-reloads don't open a new pool each time
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient }
 
-const connectionString = `${process.env.DATABASE_URL}`
-
-const adapter = new PrismaPg({ connectionString })
-
-export const prisma =
-    global.prisma ??
-    new PrismaClient({
-        adapter,
+export function getPrisma(): PrismaClient {
+    globalForPrisma.prisma ??= new PrismaClient({
+        adapter: new PrismaPg({ connectionString: env.databaseUrl }),
     })
-
-if (process.env.NODE_ENV !== "production") {
-    global.prisma = prisma
+    return globalForPrisma.prisma
 }

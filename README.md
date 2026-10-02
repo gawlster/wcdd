@@ -1,40 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# West Coast Diamond Detail
 
-## Getting Started
+Marketing site for a mobile auto-detailing business: a single landing page (hero, service
+packages, quote request form) plus a password-protected `/admin` page for reviewing quote
+requests.
 
-First, run the development server:
+**Stack:** Next.js 16 (App Router) · React 19 · Tailwind CSS 4 · Prisma 7 + PostgreSQL · zod
+
+## Getting started
 
 ```bash
+cp .env.example .env      # then fill it in (or `npm run linkenv` inside a worktree)
+npm install               # also generates the Prisma client
+npx prisma migrate deploy # bring your dev database up to date
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. The admin page is at http://localhost:3000/admin and uses the
+`ADMIN_USERNAME` / `ADMIN_PASSWORD` from `.env`.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Environment variables
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+| Variable         | Purpose                          |
+| ---------------- | -------------------------------- |
+| `DATABASE_URL`   | Postgres connection string       |
+| `ADMIN_USERNAME` | Basic-auth username for `/admin` |
+| `ADMIN_PASSWORD` | Basic-auth password for `/admin` |
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+Point `DATABASE_URL` at a **dev** database locally. `prisma migrate dev` can offer to reset
+the database it runs against.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project structure
 
-## Learn More
+```
+src/
+  app/                 Routes: layout.tsx (fonts, metadata), page.tsx (landing), admin/
+  actions/             Public server actions (contact form submission)
+  components/landing/  Landing page sections
+  components/ui/       Shared UI primitives (Button, Input, Eyebrow)
+  content/             Business details and service packages; edit copy here
+  lib/                 Prisma client, env, auth, validation schema, rate limiting
+  proxy.ts             Basic auth for /admin
+prisma/                Schema and migrations
+```
 
-To learn more about Next.js, take a look at the following resources:
+Styling uses Tailwind with the brand tokens and responsive type scale (`type-sm` …
+`type-3xl`) defined in `src/app/globals.css`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## Admin auth
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`src/proxy.ts` puts `/admin` behind HTTP Basic auth. Server actions can be invoked from any
+path, so admin actions also check credentials themselves (`isAdminRequest()` in
+`src/lib/auth.ts`). Do the same in any new admin action.
 
-## Deploy on Vercel
+## Database changes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Edit `prisma/schema.prisma`.
+2. Against your dev database: `npx prisma migrate dev --name <name>`. Add `--create-only`
+   to review or edit the SQL first, e.g. to backfill data.
+3. Commit the generated folder in `prisma/migrations/`.
+4. Production runs `npx prisma migrate deploy` before the new code goes live.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+Migrations run while the previous release is still serving traffic, so destructive changes
+(dropping or renaming columns/tables) ship in two releases: first add the new shape and
+stop using the old one, then drop the old one in a later release. See the `hasResponded`
+note in `schema.prisma`, which is a pending second step of exactly this kind.
+
+## Scripts
+
+| Script                 | Does                                 |
+| ---------------------- | ------------------------------------ |
+| `npm run dev`          | Dev server                           |
+| `npm run build`        | Production build                     |
+| `npm run start`        | Serve the production build           |
+| `npm run lint`         | ESLint                               |
+| `npm run format`       | Prettier (write)                     |
+| `npm run format:check` | Prettier (check only, for CI)        |
+| `npm run linkenv`      | Symlink `../../.env` into a worktree |
