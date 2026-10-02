@@ -8,7 +8,8 @@
         "build": "next build",
         "start": "next start",
         "lint": "eslint",
-        "postinstall": "prisma generate"
+        "postinstall": "prisma generate",
+        "linkenv": "ln -s ../../.env .env"
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^7.1.0",
