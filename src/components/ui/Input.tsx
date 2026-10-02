@@ -1,6 +1,5 @@
 import { useId } from "react"
-import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Field, fieldClass, fieldErrorId } from "./Field"
 
 type InputProps = {
     label: string
@@ -15,9 +14,6 @@ type InputProps = {
     multiline?: boolean
 }
 
-const fieldClass =
-    "type-lg bg-transparent px-3 py-5 text-fg outline-none placeholder:text-muted disabled:text-muted-light"
-
 export function Input({
     label,
     name,
@@ -31,7 +27,6 @@ export function Input({
     multiline = false,
 }: InputProps) {
     const id = useId()
-    const errorId = `${id}-error`
     const fieldProps = {
         id,
         name,
@@ -42,16 +37,10 @@ export function Input({
             e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
         ) => onChange(e.target.value),
         "aria-invalid": error ? true : undefined,
-        "aria-describedby": error ? errorId : undefined,
+        "aria-describedby": error ? fieldErrorId(id) : undefined,
     }
     return (
-        <div className="group flex w-full flex-col gap-1">
-            <label
-                htmlFor={id}
-                className={`type-md ${error ? "font-semibold text-danger" : ""}`}
-            >
-                {label}
-            </label>
+        <Field id={id} label={label} error={error}>
             {multiline ? (
                 <textarea
                     {...fieldProps}
@@ -66,22 +55,6 @@ export function Input({
                     className={fieldClass}
                 />
             )}
-            <div
-                className={`relative h-px w-full ${error ? "bg-danger" : "bg-line"}`}
-            >
-                <span
-                    className={`absolute inset-0 origin-left scale-x-0 transition-transform duration-200 group-focus-within:scale-x-100 ${error ? "bg-danger" : "bg-accent"}`}
-                />
-            </div>
-            {error && (
-                <p
-                    id={errorId}
-                    className="flex items-center gap-2 type-md text-danger"
-                >
-                    <FontAwesomeIcon icon={faExclamationCircle} />
-                    {error}
-                </p>
-            )}
-        </div>
+        </Field>
     )
 }

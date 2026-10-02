@@ -10,10 +10,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { submitContact } from "@/actions/contact"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
+import { SegmentedControl } from "@/components/ui/SegmentedControl"
+import { Select } from "@/components/ui/Select"
 import { site } from "@/content/site"
+import { ContactMethod } from "@/generated/prisma/enums"
 import {
+    contactMethodLabels,
     contactSchema,
     getFieldErrors,
+    packageOptions,
     type ContactField,
     type ContactFieldErrors,
     type ContactInput,
@@ -23,8 +28,15 @@ const emptyValues: ContactInput = {
     name: "",
     email: "",
     phone: "",
+    packageId: "",
+    preferredContact: ContactMethod.email,
     message: "",
 }
+
+const contactMethodOptions = Object.values(ContactMethod).map((value) => ({
+    value,
+    label: contactMethodLabels[value],
+}))
 
 export function ContactForm() {
     const [values, setValues] = useState(emptyValues)
@@ -100,12 +112,30 @@ export function ContactForm() {
                     autoComplete="email"
                 />
             </div>
-            <Input
-                {...fieldProps("phone")}
-                label="Phone"
-                placeholder="(555) 123-4567"
-                type="tel"
-                autoComplete="tel"
+            <div className="flex w-full flex-col justify-center gap-6 md:flex-row">
+                <Input
+                    {...fieldProps("phone")}
+                    label="Phone"
+                    placeholder="(555) 123-4567"
+                    type="tel"
+                    autoComplete="tel"
+                />
+                <SegmentedControl
+                    label="Preferred contact method"
+                    name="preferredContact"
+                    value={values.preferredContact}
+                    onChange={(preferredContact) =>
+                        setValues((v) => ({ ...v, preferredContact }))
+                    }
+                    options={contactMethodOptions}
+                    disabled={disabled}
+                />
+            </div>
+            <Select
+                {...fieldProps("packageId")}
+                label="Package"
+                placeholder="Which package are you interested in?"
+                options={packageOptions}
             />
             <Input
                 {...fieldProps("message")}
