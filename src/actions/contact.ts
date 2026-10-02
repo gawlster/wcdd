@@ -1,12 +1,14 @@
 "use server"
 
 import { headers } from "next/headers"
+import { after } from "next/server"
 import {
     contactSchema,
     getFieldErrors,
     type ContactFieldErrors,
     type ContactInput,
 } from "@/lib/contact-schema"
+import { notifyNewSubmission } from "@/lib/notify"
 import { getPrisma } from "@/lib/prisma"
 import { isRateLimited } from "@/lib/rate-limit"
 
@@ -54,5 +56,7 @@ export async function submitContact(
             error: "Something went wrong. Try again later or contact us for assistance.",
         }
     }
+    // Runs after the response is sent, so the visitor doesn't wait on Twilio
+    after(() => notifyNewSubmission(parsed.data))
     return { ok: true }
 }

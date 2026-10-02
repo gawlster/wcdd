@@ -20,11 +20,17 @@ Open http://localhost:3000. The admin page is at http://localhost:3000/admin and
 
 ### Environment variables
 
-| Variable         | Purpose                          |
-| ---------------- | -------------------------------- |
-| `DATABASE_URL`   | Postgres connection string       |
-| `ADMIN_USERNAME` | Basic-auth username for `/admin` |
-| `ADMIN_PASSWORD` | Basic-auth password for `/admin` |
+| Variable                                   | Purpose                                                                       |
+| ------------------------------------------ | ----------------------------------------------------------------------------- |
+| `DATABASE_URL`                             | Postgres connection string                                                    |
+| `ADMIN_USERNAME`                           | Basic-auth username for `/admin`                                              |
+| `ADMIN_PASSWORD`                           | Basic-auth password for `/admin`                                              |
+| `SMS_NOTIFY_TO`                            | Comma-separated E.164 numbers to text about new submissions; empty sends none |
+| `TWILIO_ACCOUNT_SID` / `TWILIO_AUTH_TOKEN` | Twilio credentials; only needed when `SMS_NOTIFY_TO` is set                   |
+| `TWILIO_FROM_NUMBER`                       | Twilio number the texts come from (E.164)                                     |
+
+Locally, set `SMS_NOTIFY_TO` to just your own number (or leave it empty); production lists
+every stakeholder. A failed text is logged and never fails the submission.
 
 Point `DATABASE_URL` at a **dev** database locally. `prisma migrate dev` can offer to reset
 the database it runs against.
