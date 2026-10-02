@@ -53,7 +53,14 @@ function PackageCard({
                     {number}
                 </div>
                 <div className="flex flex-col gap-5 md:gap-7">
-                    <Eyebrow>{pkg.subtitle}</Eyebrow>
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                        <Eyebrow>{pkg.subtitle}</Eyebrow>
+                        {pkg.badge && (
+                            <span className="rounded-full bg-accent px-3 py-1 type-sm font-medium tracking-[2px] text-on-accent uppercase">
+                                {pkg.badge}
+                            </span>
+                        )}
+                    </div>
                     <h3 className="font-serif type-2xl font-normal">
                         {pkg.title}
                     </h3>

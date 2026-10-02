@@ -1,8 +1,10 @@
 export type ServicePackage = {
-    /** Also used as the section's anchor id, e.g. `/#hightide` */
+    /** Also used as the section's anchor id, e.g. `/#high-tide-treatment` */
     id: string
     title: string
     subtitle: string
+    /** Optional highlight shown beside the subtitle, e.g. "Most Popular" */
+    badge?: string
     priceRange: string
     description: string
     imageSrc: string
@@ -10,57 +12,58 @@ export type ServicePackage = {
 
 export const packages = [
     {
-        id: "hightide",
+        id: "high-tide-treatment",
         title: "High Tide Treatment",
         subtitle: "Premium Package",
+        badge: "Most Popular",
         priceRange: "Starting at $299",
         description:
-            "The ultimate luxury detailing experience. Full-service package that transforms your car inside and out using premium products and meticulous techniques. Includes deep exterior cleaning, tire and trim detailing, interior vacuuming, carpet shampoo, and leather or fabric care with optional upgrades.",
+            "A top-to-bottom luxury detail that transforms your car inside and out. Outside, every panel gets a deep clean and the tires and trim are detailed. Inside, we vacuum throughout, shampoo the carpets, and care for your leather or fabric upholstery. Optional upgrades are available.",
         imageSrc: "/images/interior2.jpg",
     },
     {
-        id: "coastal",
+        id: "coastal-cabin-revival",
         title: "Coastal Cabin Revival",
         subtitle: "Interior Focus",
         priceRange: "Starting at $199",
         description:
-            "A deep interior detail tailored for vehicles needing more than standard cleaning. Perfect for tackling stains, odors, pet hair, or long-neglected cabins. Every surface from carpets and floor mats to dashboards and vents is carefully cleaned and refreshed.",
+            "A restorative interior detail for cabins that need more than a quick clean. We tackle stains, odors, pet hair, and long-term neglect, working through every surface from the carpets and floor mats to the dashboard and vents.",
         imageSrc: "/images/interior1.jpg",
     },
     {
-        id: "shoreline",
+        id: "shoreline-sweep",
         title: "Shoreline Sweep",
         subtitle: "Maintenance Service",
         priceRange: "Starting at $119",
         description:
-            "Keep your vehicle looking fresh between full details. This upkeep-focused service refreshes both interior and exterior, maintaining the clean, polished look achieved from previous treatments. Perfect for routine care to extend protective coatings.",
+            "Keep your vehicle looking its best between full details. This maintenance service refreshes the interior and exterior to preserve the results of your last treatment, and regular visits help your protective coatings last longer.",
         imageSrc: "/images/blue-car.jpeg",
     },
     {
-        id: "ceramic",
+        id: "ceramic-coating",
         title: "Ceramic Coating",
         subtitle: "Paint Protection",
         priceRange: "Starting at $999",
         description:
-            "The ultimate ceramic protection experience. A premium package designed to enhance your vehicle’s gloss while providing long-lasting protection against UV rays, road grime, environmental contaminants, and everyday wear. Includes meticulous paint preparation and application of our premium ceramic coating for a deep, high-gloss finish, easier maintenance, and lasting protection that keeps your vehicle looking freshly detailed for longer.",
+            "Long-term protection with a deep, glossy finish. We carefully prepare the paint, then apply our premium ceramic coating to guard against UV rays, road grime, environmental contaminants, and everyday wear. The result is paint that is easier to wash, holds its shine, and stays looking freshly detailed for longer.",
         imageSrc: "/images/ceramic.jpg",
     },
     {
-        id: "rv",
-        title: "RV",
+        id: "open-road-refresh",
+        title: "Open Road Refresh",
         subtitle: "Exterior Detailing",
         priceRange: "Contact for a quote",
         description:
-            "Keep your RV looking road-ready wherever the journey takes you. Our professional RV exterior detailing service is designed to remove built-up road grime, oxidation, dirt, and environmental contaminants while restoring a clean, polished appearance. From the roof and body to the wheels, windows, and exterior trim, every surface is carefully cleaned and finished using premium products and proven techniques—leaving your RV looking fresh, protected, and ready for its next adventure.",
+            "Road-ready care for your home on wheels. This RV exterior detail strips away built-up dirt, oxidation, and contaminants from the roof and body, then cleans and finishes the wheels, windows, and trim. Your rig comes back looking sharp and protected for the next adventure.",
         imageSrc: "/images/rv.jpg",
     },
     {
-        id: "marine",
-        title: "Marine",
+        id: "seaworthy-shine",
+        title: "Seaworthy Shine",
         subtitle: "Boat Care",
         priceRange: "Contact for a quote",
         description:
-            "The ultimate marine detailing experience. A complete boat care package designed to restore, protect, and enhance your vessel from bow to stern. Includes a thorough exterior detail covering the hull, topsides, rails, fixtures, and other exterior surfaces, along with select interior cleaning and detailing. Finished with premium products and meticulous techniques to bring back a clean, polished look and keep your boat looking its best on the water.",
+            "Bow-to-stern detailing for your vessel. The exterior work covers the hull, topsides, rails, fixtures, and every other outside surface, and select interior areas are cleaned and detailed as well. Your boat is restored, protected, and ready to turn heads on the water.",
         imageSrc: "/images/marine.jpg",
     },
 ] satisfies ServicePackage[]
