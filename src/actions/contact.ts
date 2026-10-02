@@ -20,7 +20,7 @@ export async function submitContact(
         return { ok: false, fieldErrors: getFieldErrors(parsed.error) }
     }
     try {
-        await getPrisma().formSubmission.create({ data: parsed.data })
+        await getPrisma().contactSubmission.create({ data: parsed.data })
     } catch (e) {
         console.error("Failed to save contact submission", e)
         return {

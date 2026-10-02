@@ -27,7 +27,7 @@ export default async function AdminPage() {
     // The proxy already enforces this; checked again in case its matcher ever drifts
     if (!(await isAdminRequest())) notFound()
 
-    const submissions = await getPrisma().formSubmission.findMany({
+    const submissions = await getPrisma().contactSubmission.findMany({
         orderBy: { createdAt: "desc" },
     })
 
@@ -81,11 +81,16 @@ export default async function AdminPage() {
                                         {s.message}
                                     </td>
                                     <td className={tdClass}>
-                                        {s.hasResponded ? (
-                                            <FontAwesomeIcon
-                                                icon={faCheckCircle}
-                                                title="Responded"
-                                            />
+                                        {s.respondedAt ? (
+                                            <span className="flex items-center gap-2">
+                                                <FontAwesomeIcon
+                                                    icon={faCheckCircle}
+                                                    title="Responded"
+                                                />
+                                                <LocalDateTime
+                                                    value={s.respondedAt}
+                                                />
+                                            </span>
                                         ) : (
                                             <MarkRespondedButton id={s.id} />
                                         )}

@@ -1,5 +1,7 @@
-// When making changes, run `npx prisma migrate dev --name <name>`
-// Then run `npx prisma generate` to generate a new prisma client with the new schema
+// When making changes, run `npx prisma migrate dev --name <name>` against a dev database
+// (add `--create-only` to review/edit the SQL first, e.g. to backfill data).
+// Then run `npx prisma generate` to generate a new prisma client with the new schema.
+// Production applies committed migrations with `npx prisma migrate deploy`.
 
 generator client {
     provider = "prisma-client"
@@ -10,12 +12,22 @@ datasource db {
     provider = "postgresql"
 }
 
-model FormSubmission {
-    id           Int      @id @default(autoincrement())
-    createdAt    DateTime @default(now())
-    hasResponded Boolean  @default(false)
-    name         String
-    email        String
-    phone        String
-    message      String
+model ContactSubmission {
+    id          Int       @id @default(autoincrement())
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @default(now()) @updatedAt
+    respondedAt DateTime?
+    name        String
+    email       String
+    phone       String
+    message     String
+
+    // Replaced by `respondedAt`. @ignore hides it from the client while keeping the column, so
+    // the previous release still works mid-deploy. Once this release is live, delete this line
+    // and generate a migration that backfills stragglers and drops the column.
+    hasResponded Boolean @default(false) @ignore
+
+    @@index([createdAt])
+    // Table keeps its original name; renaming it would break the previous release mid-deploy
+    @@map("FormSubmission")
 }
