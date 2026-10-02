@@ -22,11 +22,6 @@ model ContactSubmission {
     phone       String
     message     String
 
-    // Replaced by `respondedAt`. @ignore hides it from the client while keeping the column, so
-    // the previous release still works mid-deploy. Once this release is live, delete this line
-    // and generate a migration that backfills stragglers and drops the column.
-    hasResponded Boolean @default(false) @ignore
-
     @@index([createdAt])
     // Table keeps its original name; renaming it would break the previous release mid-deploy
     @@map("FormSubmission")
