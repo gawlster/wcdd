@@ -85,8 +85,10 @@ export default async function AdminPage() {
                                             <span className="flex items-center gap-2">
                                                 <FontAwesomeIcon
                                                     icon={faCheckCircle}
-                                                    title="Responded"
                                                 />
+                                                <span className="sr-only">
+                                                    Responded
+                                                </span>
                                                 <LocalDateTime
                                                     value={s.respondedAt}
                                                 />
