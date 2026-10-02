@@ -24,7 +24,7 @@ export function Packages() {
                 ))}
             </div>
             <p className="text-center type-lg text-muted">
-                Prices vary based on vehicle size. Add-ons available for
+                Prices vary based on size and condition. Add-ons available for
                 complete customization.
             </p>
         </section>
