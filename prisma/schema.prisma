@@ -12,15 +12,24 @@ datasource db {
     provider = "postgresql"
 }
 
+enum ContactMethod {
+    phone
+    email
+}
+
 model ContactSubmission {
-    id          Int       @id @default(autoincrement())
-    createdAt   DateTime  @default(now())
-    updatedAt   DateTime  @default(now()) @updatedAt
-    respondedAt DateTime?
-    name        String
-    email       String
-    phone       String
-    message     String
+    id               Int            @id @default(autoincrement())
+    createdAt        DateTime       @default(now())
+    updatedAt        DateTime       @default(now()) @updatedAt
+    respondedAt      DateTime?
+    name             String
+    email            String
+    phone            String
+    message          String
+    // Both null on rows submitted before they were added to the form
+    /// A package `id` from src/content/packages.ts, or "not-sure"
+    packageId        String?
+    preferredContact ContactMethod?
 
     @@index([createdAt])
     // Table keeps its original name; renaming it would break the previous release mid-deploy

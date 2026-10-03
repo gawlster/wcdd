@@ -17,4 +17,20 @@ export const env = {
     get adminPassword() {
         return required("ADMIN_PASSWORD")
     },
+    /** Comma-separated E.164 numbers; empty or unset turns SMS notifications off */
+    get smsNotifyTo() {
+        return (process.env.SMS_NOTIFY_TO ?? "")
+            .split(",")
+            .map((n) => n.trim())
+            .filter(Boolean)
+    },
+    get twilioAccountSid() {
+        return required("TWILIO_ACCOUNT_SID")
+    },
+    get twilioAuthToken() {
+        return required("TWILIO_AUTH_TOKEN")
+    },
+    get twilioFromNumber() {
+        return required("TWILIO_FROM_NUMBER")
+    },
 }

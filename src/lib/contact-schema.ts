@@ -1,4 +1,18 @@
 import { z } from "zod"
+import { packages } from "@/content/packages"
+import { ContactMethod } from "@/generated/prisma/enums"
+
+export const NOT_SURE_PACKAGE = "not-sure"
+
+export const packageOptions = [
+    ...packages.map((p) => ({ value: p.id, label: p.title })),
+    { value: NOT_SURE_PACKAGE, label: "Not sure" },
+]
+
+export const contactMethodLabels: Record<ContactMethod, string> = {
+    phone: "Phone",
+    email: "Email",
+}
 
 // Shared by the contact form (instant feedback) and the server action (source of truth)
 export const contactSchema = z.object({
@@ -21,6 +35,11 @@ export const contactSchema = z.object({
             (v) => (v.match(/\d/g) ?? []).length >= 7,
             "Enter a valid phone number"
         ),
+    packageId: z.enum(
+        packageOptions.map((o) => o.value),
+        'Choose a package, or "Not sure"'
+    ),
+    preferredContact: z.enum(ContactMethod),
     message: z
         .string()
         .trim()

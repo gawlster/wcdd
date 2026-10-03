@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { isAdminRequest } from "@/lib/auth"
+import { contactMethodLabels, packageOptions } from "@/lib/contact-schema"
 import { getPrisma } from "@/lib/prisma"
 import { LocalDateTime } from "./LocalDateTime"
 import { MarkRespondedButton } from "./MarkRespondedButton"
@@ -18,10 +19,19 @@ const columns = [
     "Name",
     "Email",
     "Phone",
+    "Preferred Contact",
+    "Package",
     "Message",
     "Responded",
 ]
 const tdClass = "border-x border-b border-x-line border-b-muted p-2 align-top"
+// Shown for rows submitted before the form asked for a field
+const notAsked = <span className="text-muted">—</span>
+
+function packageLabel(packageId: string) {
+    // Falls back to the raw id if the package has since been renamed or removed
+    return packageOptions.find((o) => o.value === packageId)?.label ?? packageId
+}
 
 export default async function AdminPage() {
     // The proxy already enforces this; checked again in case its matcher ever drifts
@@ -74,6 +84,18 @@ export default async function AdminPage() {
                                         >
                                             {s.phone}
                                         </a>
+                                    </td>
+                                    <td className={tdClass}>
+                                        {s.preferredContact
+                                            ? contactMethodLabels[
+                                                  s.preferredContact
+                                              ]
+                                            : notAsked}
+                                    </td>
+                                    <td className={tdClass}>
+                                        {s.packageId
+                                            ? packageLabel(s.packageId)
+                                            : notAsked}
                                     </td>
                                     <td
                                         className={`${tdClass} whitespace-pre-wrap`}

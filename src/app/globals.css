@@ -21,6 +21,10 @@
     --color-success-bg: #1e3a2a;
     --color-danger: #b24a4a;
     --color-danger-bg: #3a1e1e;
+    /* The highlight in the gold "glint" that sweeps across headlines, buttons and photos */
+    --color-shine: #fff6dc;
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Responsive type scale: mobile size, then md and up */
@@ -64,6 +68,8 @@
 @layer base {
     html {
         line-height: normal;
+        /* Keep anchor targets clear of the fixed navbar */
+        scroll-padding-top: 5rem;
     }
     @media (prefers-reduced-motion: no-preference) {
         html {
@@ -73,5 +79,284 @@
     body {
         @apply bg-bg font-sans text-fg;
         overflow-x: clip;
+    }
+    /* Fine film grain over everything, so the flat background reads as a material */
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        pointer-events: none;
+        opacity: 0.05;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+}
+
+/*
+ * Motion. All of it is decoration: under prefers-reduced-motion it switches off and the page
+ * renders exactly as it would without it. Scroll-linked effects (parallax) are progressive
+ * enhancement; browsers without scroll-driven animations get the static page.
+ */
+
+@keyframes rise-in {
+    from {
+        opacity: 0;
+        translate: 0 0.35em;
+    }
+}
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+}
+@keyframes fade-down {
+    from {
+        opacity: 0;
+        translate: 0 -1rem;
+    }
+}
+@keyframes draw-x {
+    from {
+        scale: 0 1;
+    }
+}
+@keyframes settle {
+    from {
+        scale: 1.08;
+    }
+}
+@keyframes shine-sweep {
+    from {
+        background-position: 100% 0;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
+@keyframes nudge-down {
+    0%,
+    100% {
+        translate: 0 0;
+    }
+    50% {
+        translate: 0 0.4rem;
+    }
+}
+@keyframes parallax-y {
+    from {
+        translate: 0 var(--parallax-from, 0);
+    }
+    to {
+        translate: 0 var(--parallax-to, 0);
+    }
+}
+@keyframes lift-away {
+    to {
+        opacity: 0;
+        translate: 0 -10vh;
+    }
+}
+@keyframes orbit {
+    from {
+        rotate: -40deg;
+    }
+    to {
+        rotate: 40deg;
+    }
+}
+@keyframes drift {
+    33% {
+        translate: 8% -6%;
+        scale: 1.1;
+    }
+    66% {
+        translate: -6% 5%;
+        scale: 0.95;
+    }
+}
+
+@layer components {
+    /* Headline text with a band of gold light that sweeps across it once (see .hero-line) */
+    .shine-text {
+        background-image: linear-gradient(
+            100deg,
+            var(--color-fg) 42%,
+            var(--color-accent) 47%,
+            var(--color-shine) 50%,
+            var(--color-accent) 53%,
+            var(--color-fg) 58%
+        );
+        background-size: 300% 100%;
+        background-position: 0 0;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    /* A streak of light passes over the element on hover. Needs `relative overflow-hidden`. */
+    .glint-on-hover::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+            110deg,
+            transparent 35%,
+            color-mix(in srgb, var(--color-shine) 30%, transparent) 50%,
+            transparent 65%
+        );
+        translate: -100% 0;
+    }
+
+    .hero-spotlight {
+        background: radial-gradient(
+            32rem circle at var(--x, 50%) var(--y, 50%),
+            color-mix(in srgb, var(--color-shine) 22%, transparent),
+            transparent 70%
+        );
+        mix-blend-mode: soft-light;
+    }
+
+    .ambient-glow {
+        position: absolute;
+        width: 60vmax;
+        aspect-ratio: 1;
+        pointer-events: none;
+        border-radius: 50%;
+        background: radial-gradient(
+            closest-side,
+            color-mix(in srgb, var(--color-accent) 9%, transparent),
+            transparent
+        );
+    }
+
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+        /* Only animates on the way in; it snaps back unseen once it's off the far edge */
+        .glint-on-hover:hover::after {
+            translate: 100% 0;
+            transition: translate 0.9s var(--ease-out-expo);
+        }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .nav-enter {
+            /* backwards, not both: a filling transform animation would make the bar the
+               containing block for anything fixed inside it */
+            animation: fade-down 1s var(--ease-out-expo) 0.2s backwards;
+        }
+        .hero-image {
+            animation: settle 2.4s var(--ease-out-expo) both;
+        }
+        .hero-rule {
+            transform-origin: left;
+            animation: draw-x 1.2s var(--ease-out-expo) 0.3s both;
+        }
+        .hero-eyebrow {
+            animation: rise-in 1s var(--ease-out-expo) 0.55s both;
+        }
+        /* Each line rises in, then the glint sweeps across it. Set --line to stagger. */
+        .hero-line {
+            animation:
+                rise-in 1.2s var(--ease-out-expo)
+                    calc(0.7s + var(--line, 0) * 0.15s) both,
+                shine-sweep 1.8s ease-in-out calc(1.7s + var(--line, 0) * 0.2s)
+                    both;
+        }
+        .hero-cue {
+            animation:
+                fade-in 1s ease 1.8s both,
+                nudge-down 2.4s ease-in-out 2.8s infinite;
+        }
+        .ambient-glow {
+            animation: drift 28s ease-in-out infinite;
+        }
+    }
+
+    /*
+     * Scroll reveal: RevealOnScroll adds data-revealed to each [data-reveal] element as it
+     * enters the viewport. The .reveal-* classes go on that element or its descendants;
+     * --reveal-i staggers them. Nothing is hidden until RevealOnScroll has actually run and set
+     * data-reveal-ready, so if the page's JavaScript fails to load the content still shows.
+     */
+    @media (prefers-reduced-motion: no-preference) {
+        .reveal-up,
+        .reveal-wipe-from-left,
+        .reveal-wipe-from-right {
+            transition:
+                opacity 1s var(--ease-out-expo),
+                translate 1s var(--ease-out-expo),
+                clip-path 1.4s var(--ease-out-expo);
+            transition-delay: calc(var(--reveal-i, 0) * 90ms);
+        }
+        .reveal-wipe-from-left,
+        .reveal-wipe-from-right {
+            clip-path: inset(0 round var(--radius-lg));
+        }
+        .reveal-settle {
+            transition: scale 1.8s var(--ease-out-expo);
+        }
+
+        :root[data-reveal-ready]
+            :is(
+                [data-reveal]:not([data-revealed]),
+                [data-reveal]:not([data-revealed]) *
+            ) {
+            &.reveal-up {
+                opacity: 0;
+                translate: 0 2rem;
+            }
+            &.reveal-wipe-from-left {
+                clip-path: inset(0 100% 0 0 round var(--radius-lg));
+            }
+            &.reveal-wipe-from-right {
+                clip-path: inset(0 0 0 100% round var(--radius-lg));
+            }
+            &.reveal-settle {
+                scale: 1.2;
+            }
+        }
+    }
+
+    /* Parallax, tied to scroll position */
+    @supports (animation-timeline: view()) {
+        @media (prefers-reduced-motion: no-preference) {
+            .hero-timeline {
+                view-timeline: --hero block;
+            }
+            .package-timeline {
+                view-timeline: --package block;
+            }
+            .contact-timeline {
+                view-timeline: --contact block;
+            }
+            .parallax-hero-image,
+            .hero-lift-away {
+                animation-timing-function: linear;
+                animation-fill-mode: both;
+                animation-timeline: --hero;
+            }
+            /* The photo scrolls at 60% speed while the hero leaves */
+            .parallax-hero-image {
+                --parallax-to: 40%;
+                animation-name: parallax-y;
+                animation-range: exit;
+            }
+            .hero-lift-away {
+                animation-name: lift-away;
+                animation-range: exit 0% exit 60%;
+            }
+            /* Packages: the big numerals and photos lag behind, giving the cards depth */
+            .parallax-package {
+                animation: parallax-y linear both;
+                animation-timeline: --package;
+                animation-range: cover;
+            }
+            /* The contact section's glows swing slowly around its centre as it scrolls past */
+            .orbit-on-scroll {
+                animation: orbit linear both;
+                animation-timeline: --contact;
+                animation-range: cover;
+            }
+        }
     }
 }
