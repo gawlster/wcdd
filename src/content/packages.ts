@@ -40,8 +40,8 @@ export const packages = [
         imageSrc: "/images/blue-car.jpeg",
     },
     {
-        id: "ceramic-coating",
-        title: "Ceramic Coating",
+        id: "sea-glass-ceramic",
+        title: "Sea Glass Ceramic",
         subtitle: "Paint Protection",
         priceRange: "Starting at $999",
         description:
